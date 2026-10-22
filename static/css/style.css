@@ -218,7 +218,7 @@ label {
 select {
   width: 100%;
   min-height: 42px;
-  padding: 9px 32px 9px 11px;
+  /* padding: 9px 32px 9px 11px; */
   border: 1px solid #d9ded7;
   border-radius: 7px;
   background: #fff;
