@@ -1,0 +1,9 @@
+{
+  "description": "Generated locally by graph/data.py; benchmark and app use deterministic synthetic graphs.",
+  "scenarios": {
+    "small": 16,
+    "medium": 64,
+    "large": 144,
+    "dense": 100
+  }
+}

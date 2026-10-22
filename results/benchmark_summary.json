@@ -1,0 +1,71 @@
+{
+  "methodology": {
+    "trials": 7,
+    "sizes": [
+      10,
+      50,
+      100,
+      500
+    ],
+    "dataset": "deterministic synthetic grid graphs",
+    "hardware_note": "runtime is machine-dependent"
+  },
+  "summary": [
+    {
+      "input_size": 10,
+      "algorithm": "Dijkstra",
+      "avg_time_ms": 0.011999857114070827,
+      "avg_nodes_explored": 7.285714285714286,
+      "avg_route_cost": 3.039305875697492
+    },
+    {
+      "input_size": 10,
+      "algorithm": "A*",
+      "avg_time_ms": 0.011130571400436955,
+      "avg_nodes_explored": 4,
+      "avg_route_cost": 3.039305875697492
+    },
+    {
+      "input_size": 50,
+      "algorithm": "Dijkstra",
+      "avg_time_ms": 0.04400228567646991,
+      "avg_nodes_explored": 33.42857142857143,
+      "avg_route_cost": 7.655524343455129
+    },
+    {
+      "input_size": 50,
+      "algorithm": "A*",
+      "avg_time_ms": 0.030508000008921954,
+      "avg_nodes_explored": 12.857142857142858,
+      "avg_route_cost": 7.655524343455129
+    },
+    {
+      "input_size": 100,
+      "algorithm": "Dijkstra",
+      "avg_time_ms": 0.11251371431951286,
+      "avg_nodes_explored": 100,
+      "avg_route_cost": 16.26371596922547
+    },
+    {
+      "input_size": 100,
+      "algorithm": "A*",
+      "avg_time_ms": 0.12700085715420886,
+      "avg_nodes_explored": 64.14285714285714,
+      "avg_route_cost": 16.26371596922547
+    },
+    {
+      "input_size": 500,
+      "algorithm": "Dijkstra",
+      "avg_time_ms": 0.6366958571756446,
+      "avg_nodes_explored": 482.2857142857143,
+      "avg_route_cost": 34.33377082246441
+    },
+    {
+      "input_size": 500,
+      "algorithm": "A*",
+      "avg_time_ms": 0.6420328571234027,
+      "avg_nodes_explored": 295.57142857142856,
+      "avg_route_cost": 34.33377082246441
+    }
+  ]
+}

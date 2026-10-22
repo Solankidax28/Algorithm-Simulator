@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <title>Ambulance Route Lab</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Ambulance Route Lab home">
+        <span class="brand-mark" aria-hidden="true">+</span>
+        <span>
+          <span class="brand-name">Ambulance Route Lab</span>
+          <span class="brand-note">A shortest-path project</span>
+        </span>
+      </a>
+      <div class="simulation-note"><span class="status-dot" aria-hidden="true"></span>Offline demo · no live traffic</div>
+    </header>
+
+    <main>
+      <section class="page-intro" aria-labelledby="page-title">
+        <p class="eyebrow">Design &amp; Analysis of Algorithms · Mini project</p>
+        <h1 id="page-title">A clearer way to compare routes.</h1>
+        <p>Choose two points in a sample road network and see how Dijkstra’s algorithm and A* find their way.</p>
+      </section>
+
+      <div class="dashboard">
+        <aside class="sidebar" aria-label="Route settings and guide">
+          <section class="panel dispatch-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Route setup</p>
+                <h2>Where should we go?</h2>
+              </div>
+              <span class="step-number" aria-hidden="true">01</span>
+            </div>
+            <label for="scenario">Network size</label>
+            <select id="scenario">
+              <option value="small">Small · 16 intersections</option>
+              <option value="medium" selected>Medium · 64 intersections</option>
+              <option value="large">Large · 144 intersections</option>
+              <option value="dense">Dense · 100 intersections</option>
+            </select>
+            <div class="location-fields">
+              <div>
+                <label for="source">Start at</label>
+                <select id="source"></select>
+              </div>
+              <div>
+                <label for="destination">Head to</label>
+                <select id="destination"></select>
+              </div>
+            </div>
+            <button id="run" type="button">Compare routes <span aria-hidden="true">→</span></button>
+            <p id="run-note" class="helper-text" role="status" aria-live="polite">Ready when you are. This demo runs entirely on your machine.</p>
+          </section>
+
+          <section class="panel legend-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Reading the map</p>
+                <h2>Route key</h2>
+              </div>
+              <span class="step-number" aria-hidden="true">02</span>
+            </div>
+            <ul class="legend-list">
+              <li><span class="legend-symbol start-symbol" aria-hidden="true"></span>Starting point</li>
+              <li><span class="legend-symbol destination-symbol" aria-hidden="true"></span>Destination</li>
+              <li><span class="legend-line dijkstra-line" aria-hidden="true"></span>Dijkstra’s route</li>
+              <li><span class="legend-line astar-line" aria-hidden="true"></span>A* route</li>
+            </ul>
+          </section>
+
+          <section class="panel explainer">
+            <p class="eyebrow">A quick note</p>
+            <h2>Same goal, different search.</h2>
+            <p>Dijkstra checks outward from the start. A* also uses a distance estimate to focus its search toward the destination. Both are measured on the same generated network.</p>
+            <p class="formula">A* score = distance so far + estimated distance left</p>
+          </section>
+        </aside>
+
+        <section class="main-column" aria-label="Route map and results">
+          <section class="panel map-panel" aria-labelledby="map-title">
+            <div class="map-heading">
+              <div>
+                <p class="eyebrow">Generated road network</p>
+                <h2 id="map-title">Medium network · ready to explore</h2>
+              </div>
+              <div class="network-counts" aria-label="Network size">
+                <span><strong id="node-count">—</strong> intersections</span>
+                <span><strong id="edge-count">—</strong> roads</span>
+              </div>
+            </div>
+            <svg id="map" viewBox="0 0 800 520" role="img" aria-label="Map of the generated road network and calculated routes"></svg>
+            <div class="map-caption">
+              <span><span class="status-dot" aria-hidden="true"></span><b id="route-status">Ready</b><span id="map-caption-text"> Choose a start and destination to begin.</span></span>
+              <a href="/results/benchmark_results.csv" target="_blank" rel="noopener">Raw benchmark data <span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+
+          <section class="results-section" aria-label="Algorithm comparison">
+            <article class="result-card dijkstra">
+              <div class="result-heading">
+                <div><p class="eyebrow">Algorithm 1</p><h2>Dijkstra</h2></div>
+                <span class="result-label">Finds a shortest route</span>
+              </div>
+              <dl class="metrics">
+                <div><dt>Route cost</dt><dd id="d-cost">—</dd></div>
+                <div><dt>Intersections checked</dt><dd id="d-nodes">—</dd></div>
+                <div><dt>Time taken</dt><dd id="d-time">—</dd></div>
+              </dl>
+              <p class="path-label">Route</p>
+              <div class="pathline" id="d-path">Run a comparison to see the route.</div>
+            </article>
+            <article class="result-card astar">
+              <div class="result-heading">
+                <div><p class="eyebrow">Algorithm 2</p><h2>A* search</h2></div>
+                <span class="result-label">Uses a goal-directed estimate</span>
+              </div>
+              <dl class="metrics">
+                <div><dt>Route cost</dt><dd id="a-cost">—</dd></div>
+                <div><dt>Intersections checked</dt><dd id="a-nodes">—</dd></div>
+                <div><dt>Time taken</dt><dd id="a-time">—</dd></div>
+              </dl>
+              <p class="path-label">Route</p>
+              <div class="pathline" id="a-path">Run a comparison to see the route.</div>
+            </article>
+          </section>
+
+          <div class="bottom-grid">
+            <section class="panel takeaway" aria-live="polite">
+              <p class="eyebrow">What this run tells us</p>
+              <h2 id="insight-title">The results will show up here.</h2>
+              <p id="insight-text">Run a comparison to see route costs, search effort, and timings from this particular run. Timing can vary from one run to the next.</p>
+            </section>
+            <nav class="panel project-links" aria-label="Project resources">
+              <p class="eyebrow">For a closer look</p>
+              <a href="/results/performance_time.png" target="_blank" rel="noopener">Execution-time chart <span aria-hidden="true">↗</span></a>
+              <a href="/results/performance_nodes.png" target="_blank" rel="noopener">Search-effort chart <span aria-hidden="true">↗</span></a>
+              <a href="/static/README.md" target="_blank" rel="noopener">How to run the project <span aria-hidden="true">↗</span></a>
+            </nav>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Built for a fifth-semester algorithms project.</span>
+      <span>Sample data only · no real dispatch decisions</span>
+    </footer>
+  </div>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
